@@ -81,11 +81,18 @@ do
   # handling condition 3 & edge case 1:
   # check if this is a brand-new branch
   if [[ $BRANCH_IS_NEW == true ]]; then
-    COMMIT_FROM_JOB_NUM=$(extract_commit_from_job $VCS_TYPE $JOB_NUM)
+
+    extract_commit_from_job () {
+    # abstract this logic out, it gets reused a few times
+    # takes $1 (VCS_TYPE) & $2 (a job number)
+
+        
+    COMMIT_FROM_JOB_NUM=$($JOB_OUTPUT | grep '"vcs_revision" : ' | sed -E 's/"vcs_revision" ://' | sed -E 's/[[:punct:]]//g' | sed -E 's/ //g')
+    JOB_SUCCEEDED=$($JOB_OUTPUT | grep '"status" : "success"')
 
     # we do a similar check later on, but it needs to be here too
     # for edge case 1.5: an existing commit pushed to a new branch
-    if [[ $COMMIT_FROM_JOB_NUM == $CIRCLE_SHA1 ]]; then
+    if [[ $COMMIT_FROM_JOB_NUM == $CIRCLE_SHA1  || ! -z "$JOB_SUCCEEDED" ]]; then
       JOB_NUM=$(( $JOB_NUM - 1 ))
       continue
     fi
