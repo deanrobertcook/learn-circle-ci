@@ -63,6 +63,8 @@ do
     https://circleci.com/api/v1.1/project/$VCS_TYPE/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$JOB_NUM?filter=successful\
     > JOB_OUTPUT
 
+  cat JOB_OUTPUT
+
   # general approach:
   # there's a couple of skip conditions to observe here—
   # roughly in order of precedence:
