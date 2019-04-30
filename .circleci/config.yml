@@ -7,13 +7,11 @@ jobs:
     steps:
       - checkout
       - run: 
-        name: Find compare url
-        command: './circleci/find-compare-url.sh'
-
-      - run: 
         name: Build incremental changes
         command: | 
           set -e
+
+          ./circleci/find-compare-url.sh
 
           CIRCLE_COMPARE_URL=$(cat CIRCLE_COMPARE_URL.txt)
           echo $CIRCLE_COMPARE_URL
