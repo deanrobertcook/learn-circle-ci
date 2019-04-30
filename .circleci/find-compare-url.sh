@@ -87,8 +87,8 @@ do
     # takes $1 (VCS_TYPE) & $2 (a job number)
 
         
-    COMMIT_FROM_JOB_NUM=$($JOB_OUTPUT | grep '"vcs_revision" : ' | sed -E 's/"vcs_revision" ://' | sed -E 's/[[:punct:]]//g' | sed -E 's/ //g')
-    JOB_SUCCEEDED=$($JOB_OUTPUT | grep '"status" : "success"')
+    COMMIT_FROM_JOB_NUM=$(grep '"vcs_revision" : ' $JOB_OUTPUT | sed -E 's/"vcs_revision" ://' | sed -E 's/[[:punct:]]//g' | sed -E 's/ //g')
+    JOB_SUCCEEDED=$(grep '"status" : "success"' $JOB_OUTPUT)
 
     # we do a similar check later on, but it needs to be here too
     # for edge case 1.5: an existing commit pushed to a new branch
