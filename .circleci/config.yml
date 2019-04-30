@@ -1,3 +1,4 @@
+#see https://gist.github.com/naesheim/18d0c0a58ee61f4674353a2f4cf71475
 version: 2.1
 orbs:
   compare-url: iynere/compare-url@0.2
@@ -21,5 +22,5 @@ jobs:
                 ./project1/build.sh
             fi
             if [[ `python3 ${CHANGE_CHECKER} ./project2` == "True" ]]; then
-                ./project1/build.sh
+                ./project2/build.sh
             fi
