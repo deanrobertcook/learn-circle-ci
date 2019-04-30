@@ -11,5 +11,5 @@ jobs:
             CHANGE_CHECKER=./.circleci/changed-since-last-commit.py
             SUB_DIR=./project1
             if [[ `python3 ${CHANGE_CHECKER} ${SUB_DIR}` == "True" ]]; then
-                .project1/build.sh
+                ./project1/build.sh
             fi
