@@ -60,7 +60,7 @@ do
 
   # save circle api output to a temp file for reuse
   curl --user CIRCLE_TOKEN: \
-    https://circleci.com/api/v1.1/project/$VCS_TYPE/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$JOB_NUM \
+    https://circleci.com/api/v1.1/project/$VCS_TYPE/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$JOB_NUM?filter=successful\
     > JOB_OUTPUT
 
   # general approach:
@@ -83,14 +83,12 @@ do
   if [[ $BRANCH_IS_NEW == true ]]; then
 
     COMMIT_FROM_JOB_NUM=$(grep '"vcs_revision" : ' JOB_OUTPUT | sed -E 's/"vcs_revision" ://' | sed -E 's/[[:punct:]]//g' | sed -E 's/ //g')
-    JOB_SUCCEEDED=$(grep '"status" : "success"' JOB_OUTPUT)
 
     echo "Testing commit: $COMMIT_FROM_JOB_NUM"
-    echo $JOB_SUCCEEDED
 
     # we do a similar check later on, but it needs to be here too
     # for edge case 1.5: an existing commit pushed to a new branch
-    if [[ $COMMIT_FROM_JOB_NUM == $CIRCLE_SHA1  || ! -z "$JOB_SUCCEEDED" ]]; then
+    if [[ $COMMIT_FROM_JOB_NUM == $CIRCLE_SHA1 ]]; then
       JOB_NUM=$(( $JOB_NUM - 1 ))
       continue
     fi
