@@ -8,8 +8,8 @@ jobs:
       - checkout
       - run: 
         name: Find compare url
-        command: ./circleci/find-compare-url.sh
-        
+        command: './circleci/find-compare-url.sh'
+
       - run: 
         name: Build incremental changes
         command: | 
