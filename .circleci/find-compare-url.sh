@@ -85,6 +85,9 @@ do
     COMMIT_FROM_JOB_NUM=$(grep '"vcs_revision" : ' $JOB_OUTPUT | sed -E 's/"vcs_revision" ://' | sed -E 's/[[:punct:]]//g' | sed -E 's/ //g')
     JOB_SUCCEEDED=$(grep '"status" : "success",' $JOB_OUTPUT)
 
+    echo "Testing commit: $COMMIT_FROM_JOB_NUM"
+    echo $JOB_SUCCEEDED
+
     # we do a similar check later on, but it needs to be here too
     # for edge case 1.5: an existing commit pushed to a new branch
     if [[ $COMMIT_FROM_JOB_NUM == $CIRCLE_SHA1  || ! -z "$JOB_SUCCEEDED" ]]; then
