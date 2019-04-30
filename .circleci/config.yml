@@ -15,7 +15,7 @@ jobs:
 
             CIRCLE_COMPARE_URL=$(cat CIRCLE_COMPARE_URL.txt)
 
-            CHANGE_CHECKER=./scripts/changed-since-last-commit.py
+            CHANGE_CHECKER=./.circleci/changed-since-last-commit.py
             if [[ `python3 ${CHANGE_CHECKER} ./project1` == "True" ]]; then
                 ./project1/build.sh
             fi
