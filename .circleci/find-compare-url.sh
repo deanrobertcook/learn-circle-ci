@@ -20,7 +20,7 @@ extract_commit_from_job () {
 }
 
 check_if_branch_is_new () {
-  if [[ $CIRCLE_BRANCH == "master" | $CIRCLE_BRANCH == "develop" ]]; then
+  if [[ $CIRCLE_BRANCH == "master" || $CIRCLE_BRANCH == "develop" ]]; then
     echo false
   else 
     echo true
