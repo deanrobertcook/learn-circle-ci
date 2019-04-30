@@ -20,6 +20,6 @@ jobs:
             if [[ `python3 ${CHANGE_CHECKER} ./project1` == "True" ]]; then
                 ./project1/build.sh
             fi
-            if [[ `python3 ${CHANGE_CHECKER} ./project1` == "True" ]]; then
+            if [[ `python3 ${CHANGE_CHECKER} ./project2` == "True" ]]; then
                 ./project1/build.sh
             fi
