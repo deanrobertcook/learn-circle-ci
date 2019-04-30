@@ -82,8 +82,8 @@ do
   # check if this is a brand-new branch
   if [[ $BRANCH_IS_NEW == true ]]; then
 
-    COMMIT_FROM_JOB_NUM=$(grep '"vcs_revision" : ' $JOB_OUTPUT | sed -E 's/"vcs_revision" ://' | sed -E 's/[[:punct:]]//g' | sed -E 's/ //g')
-    JOB_SUCCEEDED=$(grep '"status" : "success",' $JOB_OUTPUT)
+    COMMIT_FROM_JOB_NUM=$(grep '"vcs_revision" : ' JOB_OUTPUT | sed -E 's/"vcs_revision" ://' | sed -E 's/[[:punct:]]//g' | sed -E 's/ //g')
+    JOB_SUCCEEDED=$(grep '"status" : "success",' JOB_OUTPUT)
 
     echo "Testing commit: $COMMIT_FROM_JOB_NUM"
     echo $JOB_SUCCEEDED
