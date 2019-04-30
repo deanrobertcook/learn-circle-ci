@@ -1,5 +1,5 @@
 #see https://gist.github.com/naesheim/18d0c0a58ee61f4674353a2f4cf71475
-version: 2
+version: 2.1
 jobs:
   build:
     docker:
@@ -7,19 +7,19 @@ jobs:
     steps:
       - checkout
       - run: 
-        name: Build incremental changes
-        command: | 
-          set -e
+          name: Build incremental changes
+          command: | 
+            set -e
 
-          ./circleci/find-compare-url.sh
+            ./circleci/find-compare-url.sh
 
-          CIRCLE_COMPARE_URL=$(cat CIRCLE_COMPARE_URL.txt)
-          echo $CIRCLE_COMPARE_URL
+            CIRCLE_COMPARE_URL=$(cat CIRCLE_COMPARE_URL.txt)
+            echo $CIRCLE_COMPARE_URL
 
-          CHANGE_CHECKER=./.circleci/changed-since-last-commit.py
-          if [[ `python3 ${CHANGE_CHECKER} ./project1` == "True" ]]; then
-              ./project1/build.sh
-          fi
-          if [[ `python3 ${CHANGE_CHECKER} ./project2` == "True" ]]; then
-              ./project2/build.sh
-          fi
+            CHANGE_CHECKER=./.circleci/changed-since-last-commit.py
+            if [[ `python3 ${CHANGE_CHECKER} ./project1` == "True" ]]; then
+                ./project1/build.sh
+            fi
+            if [[ `python3 ${CHANGE_CHECKER} ./project2` == "True" ]]; then
+                ./project2/build.sh
+            fi
