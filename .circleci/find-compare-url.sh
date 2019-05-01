@@ -1,6 +1,5 @@
-#!/bin/bash
+#!/bin/bash -eo pipefail
 ## VARS
-set -eo pipefail
 
 # this starts as false, set to true to exit `until` loop
 FOUND_BASE_COMPARE_COMMIT=false
