@@ -53,6 +53,8 @@ jobs:
             set -eo pipefail
             PREV_SUCCESSFUL_COMMIT=$(cat PREV_SUCCESSFUL_COMMIT.txt)
 
+            echo $PREV_SUCCESSFUL_COMMIT
+
             for PROJECT in src/*/; do
               projectname=$(basename $PROJECT)
               if [[ -z $PREV_SUCCESSFUL_COMMIT || $(git diff $PREV_SUCCESSFUL_COMMIT --name-status | grep "$projectname") ]]; then
