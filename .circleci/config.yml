@@ -19,8 +19,6 @@ jobs:
 
             #Set first job output to current job
             get_job $CIRCLE_BUILD_NUM
-
-            CIRCLE_SHA1=$(cat JOB_OUTPUT | jq -r ".vcs_revision" 2>/dev/null) || true
             echo "Current commit: ${CIRCLE_SHA1:0:8}"
 
             while true; do
