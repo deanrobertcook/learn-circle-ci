@@ -9,7 +9,6 @@ jobs:
       - run:
           name: Find previous successful build commit
           command: | 
-            set -eo pipefail
             sudo apt-get update && sudo apt-get install -y jq
 
             get_job () {
@@ -27,16 +26,15 @@ jobs:
                 get_job $PREV_SUCCESSFUL_BUILD_NUM
                 PREV_SUCCESSFUL_COMMIT=$(cat JOB_OUTPUT | jq -r ".vcs_revision" 2>/dev/null) || true
 
-                #echo "Checking if previous successful commit ${PREV_SUCCESSFUL_COMMIT:0:7} (job $PREV_SUCCESSFUL_BUILD_NUM) is an ancestor"
-                #git merge-base --is-ancestor $PREV_SUCCESSFUL_COMMIT $CIRCLE_SHA1; RESULT=$?
-                #echo "result $RESULT"
+                echo "Checking if previous successful commit ${PREV_SUCCESSFUL_COMMIT:0:7} (job $PREV_SUCCESSFUL_BUILD_NUM) is an ancestor"
+                git merge-base --is-ancestor $PREV_SUCCESSFUL_COMMIT $CIRCLE_SHA1; RESULT=$?
+                echo "result $RESULT"
 
                 # No previous successful commit OR 
                 # the previous successful commit was an ancestor OR
                 # git merge-base threw some other error THEN
                 # stop the search
-                # if [[ -z PREV_SUCCESSFUL_COMMIT || $RESULT != 1 ]]; then
-                if [[ -z PREV_SUCCESSFUL_COMMIT ]]; then
+                if [[ -z PREV_SUCCESSFUL_COMMIT || $RESULT != 1 ]]; then
                     break
                 fi
             done
