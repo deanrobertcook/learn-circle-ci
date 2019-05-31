@@ -51,23 +51,21 @@ echo "Previous successful commit: ${PREV_SUCCESSFUL_COMMIT:0:7} (job: $CUR_BUILD
 set -eo pipefail
 
 list_all_modules() {
-    find . -maxdepth 1 -type d | sed 's/\.\///' | grep -v '^\.'
+    find src -maxdepth 1 -type d | sed 's/\src\///' | cut -d'/' -f2
 }
 
 list_affected_modules() {
     if [[ -z $PREV_SUCCESSFUL_COMMIT ]]; then
         list_all_modules
     else
-        git diff --name-only $PREV_SUCCESSFUL_COMMIT | grep -v '^\.' | grep '\/' | cut -d'/' -f1 | sort | uniq
+        git diff --name-only $PREV_SUCCESSFUL_COMMIT | grep -v '^\.' | grep '\/' | cut -d'/' -f2 | sort | uniq
     fi
 }
 
 mkdir -p .runtime
 touch .runtime/affected-modules.list
 for m in $(list_affected_modules); do
-  if [[ -f "$m/build.gradle" ]]; then
-   echo "$m" >> .runtime/affected-modules.list
-  fi
+  echo "$m" >> .runtime/affected-modules.list
 done
 
 if [[ -z $(cat .runtime/affected-modules.list) ]]; then
