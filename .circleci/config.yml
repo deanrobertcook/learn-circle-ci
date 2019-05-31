@@ -8,4 +8,4 @@ jobs:
       - checkout
       - run:
           name: Find previous successful build commit
-          command: ./bin/list-affected-modules.sh
+          command: ./.circleci/list-affected-modules.sh
